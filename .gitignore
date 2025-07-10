@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# Virtual environment
+venv/
+env/
+.env
+*.env
+
+# Django
+*.log
+*.pot
+*.pyc
+migrations/
+media/
+staticfiles/
+
+# IDE and editor files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Miscellaneous
+*.DS_Store
+*.bak
+*.swp

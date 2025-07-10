@@ -74,8 +74,12 @@ WSGI_APPLICATION = 'locallibrary.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'locallibrary',
+        'USER': 'django_user',
+        'PASSWORD': 'Lucky330@',
+        'HOST': 'localhost',
+        'PORT': '5433',
     }
 }
 
