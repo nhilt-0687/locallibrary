@@ -1,0 +1,36 @@
+{% extends "base_generic.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="card book-detail">
+        <h2>{% translate "Book Details" %}</h2>
+        <p><strong>{% translate "Title" %}:</strong> {{ book.title }}</p>
+        <p><strong>{% translate "Summary" %}:</strong> {{ book.summary }}</p>
+        <p><strong>{% translate "ISBN" %}:</strong> {{ book.isbn }}</p>
+        <p><strong>{% translate "Language" %}:</strong> {{ book.language }}</p>
+        <p><strong>{% translate "Genre" %}:</strong> {{ book.genre.all|join:", " }}</p>
+
+        <h3>{% translate "Copies" %}</h3>
+        <ul class="book-list">
+            {% for copy in book.bookinstance_set.all %}
+                <li class="book-item">
+                    <div>
+                        <strong>{% translate "Status" %}:</strong>
+                        <span class="copy-status {{ copy.status|lower }}">{{ copy.get_status_display }}</span>
+                        {% if copy.status == 'o' %}
+                            <span>({% translate "Due" %}: {{ copy.due_date }})</span>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <strong>{% translate "Imprint" %}:</strong> {{ copy.imprint }}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

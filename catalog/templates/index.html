@@ -1,0 +1,33 @@
+{% extends "base_generic.html" %}
+{% load i18n %}
+{% block title %}{% translate "Home - Local Library" %}{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h1>{% translate "Welcome to the Local Library" %}</h1>
+        <p>{% translate "Explore a world of knowledge with our extensive book collection. Website developed by Mozilla Developer Network with a passion for learning!" %}</p>
+    </div>
+
+    <div class="card">
+        <h2>{% translate "Library Statistics" %}</h2>
+        <p>{% translate "Below is an overview of our current collection:" %}</p>
+        <ul>
+            <li>
+                <strong>{% translate "Total Books" %}:</strong> {{ num_books }} {% translate "books" %}
+                <p>{% translate "Including genres: literature, science, history, and more" %}</p>
+            </li>
+            <li>
+                <strong>{% translate "Total Copies" %}:</strong> {{ num_instances }} {% translate "copies" %}
+                <p>{% translate "Physical copies available in the library" %}</p>
+            </li>
+            <li>
+                <strong>{% translate "Available Books" %}:</strong> {{ num_instances_available }} {% translate "copies" %}
+                <p>{% translate "Ready for borrowing today" %}</p>
+            </li>
+            <li>
+                <strong>{% translate "Authors" %}:</strong> {{ num_authors }} {% translate "authors" %}
+                <p>{% translate "From renowned writers to emerging authors" %}</p>
+            </li>
+        </ul>
+    </div>
+{% endblock %}

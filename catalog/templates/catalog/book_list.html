@@ -1,0 +1,41 @@
+{% extends "base_generic.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h2>{% translate "Book List" %}</h2>
+        {% if book_list %}
+            <ul class="book-list">
+                {% for book in book_list %}
+                    <li class="book-item">
+                        <a href="{% url 'catalog:book_detail' book.id %}">{{ book.title }} ({{ book.author }})</a>
+                        <span>({{ book.author }})</span>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            {% if is_paginated %}
+                <div class="pagination">
+                    {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}">{% translate "Previous" %}</a>
+                    {% else %}
+                        <span>{% translate "Previous" %}</span>
+                    {% endif %}
+                    <span>{% translate "Page" %} {{ page_obj.number }} {% translate "of" %} {{ paginator.num_pages }}</span>
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">{% translate "Next" %}</a>
+                    {% else %}
+                        <span>{% translate "Next" %}</span>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% else %}
+            <p>{% translate "There are no books in the library." %}</p>
+        {% endif %}
+    </div>
+{% endblock %}
