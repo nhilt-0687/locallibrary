@@ -28,3 +28,6 @@ staticfiles/
 *.DS_Store
 *.bak
 *.swp
+
+# .gitignore
+.env
