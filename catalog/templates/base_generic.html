@@ -1,0 +1,49 @@
+{% load static %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html lang="{% get_current_language as LANGUAGE_CODE %}{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% trans "Local Library" %}{% endblock %}</title>
+    {% block head %}
+        {% spaceless %}
+            <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+        {% endspaceless %}
+    {% endblock %}
+</head>
+<body>
+    <header>
+        <h1>{% trans "Local Library" %}</h1>
+        <nav>
+            <a href="{% url 'catalog:index' %}">{% trans "Home" %}</a>
+            
+            <!-- Dropdown chọn ngôn ngữ -->
+            <div class="language-selector">
+                <form action="{% url 'set_language' %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <input name="next" type="hidden" value="{{ request.path }}">
+                    <label for="language">{% trans "Language" %}:</label>
+                    <select name="language" id="language" onchange="this.form.submit()">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% for lang_code, lang_name in LANGUAGES %}
+                            <option value="{{ lang_code }}" {% if lang_code == LANGUAGE_CODE %}selected{% endif %}>
+                                {{ lang_name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </form>
+            </div>
+        </nav>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+        <p>{% trans "© 2023 Sun* - Talent & Product Incubator Vietnam Unit. All rights reserved." %}</p>
+    </footer>
+</body>
+</html>
