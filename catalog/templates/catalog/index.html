@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Library Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <header class="bg-blue-600 text-white p-4">
+        <h1 class="text-3xl font-bold">Local Library</h1>
+    </header>
+    <main class="container mx-auto p-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-semibold text-gray-700">Total Books</h2>
+                <p class="text-3xl text-blue-600 mt-2">{{ num_books }}</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-semibold text-gray-700">Total Genres</h2>
+                <p class="text-3xl text-blue-600 mt-2">{{ num_genres }}</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-semibold text-gray-700">Total Book Instances</h2>
+                <p class="text-3xl text-blue-600 mt-2">{{ num_instances }}</p>
+            </div>
+        </div>
+        <div class="mt-6 text-center">
+            <a href="{% url 'book-list' %}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">View All Books</a>
+        </div>
+    </main>
+</body>
+</html>
