@@ -8,6 +8,7 @@ class Genre(models.Model):
     
     def __str__(self):
         return self.name
+
 class Language(models.Model):
     name = models.CharField(max_length=MAX_LENGTH_NAME, help_text=_("Enter the language (e.g. English)"))
     

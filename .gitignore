@@ -67,6 +67,9 @@ instance/
 .webassets-cache
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 1127fa7ca53f91ded5f6830b6a481b2d74457702
 
 # Scrapy stuff:
 .scrapy
@@ -209,6 +212,7 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 .pre-commit-config.yaml
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 =======
@@ -378,3 +382,5 @@ __marimo__/
 >>>>>>> 278bc57 (Django Tutorial Part 2: Creating askeleton website)
 =======
 >>>>>>> 5d67933 (Django Tutorial Part 3: Using Model)
+=======
+>>>>>>> 1127fa7ca53f91ded5f6830b6a481b2d74457702
