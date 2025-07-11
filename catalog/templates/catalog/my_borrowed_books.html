@@ -1,0 +1,30 @@
+{% extends "base_generic.html" %}
+{% load i18n %}
+{% block content %}
+    <h1>{% trans "My Borrowed Books" %}</h1>
+
+    {% if perms.catalog.can_mark_returned %}
+        <p>{% trans "You have permission to mark books as returned." %}</p>
+    {% endif %}
+
+    {% if borrowed_books %}
+        <ul>
+            {% for book_instance in borrowed_books %}
+                <li>
+                    {{ book_instance.book.title }} ({% trans "Due" %}: {{ book_instance.due_date|default:"None" }})
+                    {% if book_instance.is_overdue %}
+                        <span style="color: red;">{% trans "Overdue" %}</span>
+                    {% endif %}
+                    {% if book_instance.status == LoanStatus.ON_LOAN.value and perms.catalog.can_mark_returned %}
+                        <form action="{% url 'catalog:mark_book_returned' book_instance.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit">{% trans "Mark as returned" %}</button>
+                        </form>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>{% trans "You haven't borrowed any books." %}</p>
+    {% endif %}
+{% endblock %}

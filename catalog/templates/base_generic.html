@@ -1,0 +1,59 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html>
+<head>
+    {% block head %}
+        <title>{% trans "Local Library" %}</title>
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    {% endblock %}
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <h1>{% trans "Local Library" %}</h1>
+        </div>
+        <div class="header-right">
+            <ul class="sidebar-nav">
+                {% if user.is_authenticated %}
+                    <li>{% trans "User" %}: {{ user.get_username }}</li>
+                    <li><a href="{% url 'catalog:my_borrowed_books' %}">{% trans "My Borrowed" %}</a></li>
+                    <li>
+                        <form action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="button">{% trans "Logout" %}</button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">{% trans "Login" %}</a></li>
+                {% endif %}
+                <li><a href="{% url 'catalog:index' %}">{% trans "Home" %}</a></li>
+                <li><a href="{% url 'catalog:books' %}">{% trans "All Books" %}</a></li>
+                <li class="language-selector">
+                    <form action="{% url 'set_language' %}" method="post">
+                        {% csrf_token %}
+                        <label for="language">{% trans "Language" %}:</label>
+                        <select name="language" id="language">
+                            {% get_current_language as LANGUAGE_CODE %}
+                            {% get_available_languages as LANGUAGES %}
+                            {% for lang_code, lang_name in LANGUAGES %}
+                                <option value="{{ lang_code }}" {% if lang_code == LANGUAGE_CODE %}selected{% endif %}>
+                                    {{ lang_name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                        <input type="submit" value="{% trans 'Change' %}" class="button">
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+        {% trans "© 2023 Sun* - Talent & Product Incubator Vietnam Unit. All rights reserved." %}
+    </footer>
+</body>
+</html>
