@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 from django.views import generic
 from catalog.models import Book, Author, BookInstance, Genre
 from catalog.constants import LoanStatus
