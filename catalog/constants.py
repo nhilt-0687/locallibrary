@@ -1,8 +1,5 @@
 from enum import Enum
-<<<<<<< HEAD
 
-=======
->>>>>>> a2457d3 (Django Tutorial Part 5: Creating Our Home Page (#9))
 MAX_LENGTH_NAME = 200
 MAX_LENGTH_AUTHOR_NAME = 100
 MAX_LENGTH_ISBN = 13
