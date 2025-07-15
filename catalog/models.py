@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from .constants import MAX_LENGTH_NAME, MAX_LENGTH_AUTHOR_NAME, MAX_LENGTH_ISBN, MAX_LENGTH_SUMMARY, MAX_LENGTH_UNIQUE_ID
+from .constants import MAX_LENGTH_NAME, MAX_LENGTH_AUTHOR_NAME, MAX_LENGTH_ISBN, MAX_LENGTH_SUMMARY, MAX_LENGTH_UNIQUE_ID, LoanStatus
 from django.urls import reverse
 import uuid
 class Genre(models.Model):
@@ -49,11 +49,18 @@ class BookInstance(models.Model):
     book = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True)
     due_date = models.DateField(null=True, blank=True)
     imprint = models.CharField(max_length=200, blank=True, null=True, help_text="Enter the publisher imprint")
-    status = models.CharField(max_length=20, choices=[
-        ('available', 'Available'),
-        ('on_loan', 'On Loan'),
-        ('reserved', 'Reserved'),
-    ], default='available')
+    status = models.CharField(
+        max_length=1,
+        choices=[
+            (LoanStatus.MAINTENANCE.value, _(str(LoanStatus.MAINTENANCE.name).capitalize())),
+            (LoanStatus.ON_LOAN.value, _(str(LoanStatus.ON_LOAN.name).capitalize())),
+            (LoanStatus.AVAILABLE.value, _(str(LoanStatus.AVAILABLE.name).capitalize())),
+            (LoanStatus.RESERVED.value, _(str(LoanStatus.RESERVED.name).capitalize())),
+        ],
+        blank=True,
+        default=LoanStatus.MAINTENANCE.value,
+        help_text=_('Book availability'),
+    )
 
     def __str__(self):
         return f'{self.id} ({self.book.title})'

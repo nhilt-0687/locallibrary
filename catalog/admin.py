@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils import timezone
 from datetime import timedelta
 from .models import Author, Book, Genre, Language, BookInstance
-
+from .constants import DEFAULT_IMPRINT
 class BookInstanceInline(admin.TabularInline):
     """Inline editing for BookInstances related to a Book."""
     model = BookInstance
@@ -77,7 +77,7 @@ class BookInstanceAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         """Set default imprint and due_date if not provided."""
         if not obj.imprint:
-            obj.imprint = 'Penguin Group'
+            obj.imprint = DEFAULT_IMPRINT
         if not obj.id and not obj.due_date:
             obj.due_date = timezone.now() + timedelta(days=30)
         super().save_model(request, obj, form, change)
