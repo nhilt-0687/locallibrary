@@ -1,7 +1,12 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from .constants import (MAX_LENGTH_NAME, MAX_LENGTH_AUTHOR_NAME,
-                        MAX_LENGTH_ISBN, MAX_LENGTH_SUMMARY, LoanStatus)
+from .constants import (
+    MAX_LENGTH_NAME,
+    MAX_LENGTH_AUTHOR_NAME,
+    MAX_LENGTH_ISBN,
+    MAX_LENGTH_SUMMARY,
+    LoanStatus
+)
 from django.urls import reverse
 import uuid
 
@@ -52,15 +57,21 @@ class Book(models.Model):
     isbn = models.CharField(
         _("ISBN"),
         max_length=MAX_LENGTH_ISBN,
-        help_text=_("13 Character <a href='https://www.isbn-international.org"
-                    "/content/what-isbn'>ISBN number</a>")
+        help_text=_(
+            "13 Character "
+            "<a href='https://www.isbn-international.org/content/what-isbn'>"
+            "ISBN number</a>"
+        )
     )
     genre = models.ManyToManyField(
         Genre,
         help_text=_("Select a genre for this book")
     )
-    language = models.ForeignKey(Language, on_delete=models.SET_NULL,
-                                 null=True)
+    language = models.ForeignKey(
+        Language,
+        on_delete=models.SET_NULL,
+        null=True
+    )
 
     def __str__(self):
         return self.title
@@ -70,8 +81,11 @@ class Book(models.Model):
 
 
 class BookInstance(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4,
-                          editable=False)
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
     book = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True)
     due_date = models.DateField(null=True, blank=True)
     imprint = models.CharField(
@@ -83,18 +97,26 @@ class BookInstance(models.Model):
     status = models.CharField(
         max_length=1,
         choices=[
-            (LoanStatus.MAINTENANCE.value,
-             _(str(LoanStatus.MAINTENANCE.name).capitalize())),
-            (LoanStatus.ON_LOAN.value,
-             _(str(LoanStatus.ON_LOAN.name).capitalize())),
-            (LoanStatus.AVAILABLE.value,
-             _(str(LoanStatus.AVAILABLE.name).capitalize())),
-            (LoanStatus.RESERVED.value,
-             _(str(LoanStatus.RESERVED.name).capitalize())),
+            (
+                LoanStatus.MAINTENANCE.value,
+                _(str(LoanStatus.MAINTENANCE.name).capitalize())
+            ),
+            (
+                LoanStatus.ON_LOAN.value,
+                _(str(LoanStatus.ON_LOAN.name).capitalize())
+            ),
+            (
+                LoanStatus.AVAILABLE.value,
+                _(str(LoanStatus.AVAILABLE.name).capitalize())
+            ),
+            (
+                LoanStatus.RESERVED.value,
+                _(str(LoanStatus.RESERVED.name).capitalize())
+            ),
         ],
         blank=True,
         default=LoanStatus.MAINTENANCE.value,
-        help_text=_('Book availability'),
+        help_text=_('Book availability')
     )
 
     def __str__(self):

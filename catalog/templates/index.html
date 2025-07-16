@@ -30,5 +30,12 @@
                 <p>{% trans "From renowned writers to emerging authors" %}</p>
             </li>
         </ul>
+    <p>
+        {% blocktrans count num_visits_present=num_visits %}
+            You have visited this page {{ num_visits_present }} time.
+        {% plural %}
+            You have visited this page {{ num_visits_present }} times.
+        {% endblocktrans %}
+    </p>
     </div>
 {% endblock %}

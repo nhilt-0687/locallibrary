@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils import timezone
 from datetime import timedelta
 from .models import Author, Book, Genre, Language, BookInstance
-from .constants import DEFAULT_IMPRINT
+from .constants import DEFAULT_IMPRINT  
 
 
 class BookInstanceInline(admin.TabularInline):
@@ -21,8 +21,11 @@ class BookInline(admin.TabularInline):
 
 
 class AuthorAdmin(admin.ModelAdmin):
-    list_display = ('last_name', 'first_name', 'date_of_birth',
-                    'date_of_death')
+    list_display = (
+        'last_name',
+        'first_name',
+        'date_of_birth',
+        'date_of_death')
     search_fields = ['last_name', 'first_name']
     list_filter = ('date_of_birth', 'date_of_death')
     ordering = ['last_name', 'first_name']
@@ -34,8 +37,8 @@ class AuthorAdmin(admin.ModelAdmin):
         }),
         ('Dates', {
             'fields': ('date_of_birth', 'date_of_death'),
-            'description': ('Use calendar to select dates. Note: Server time '
-                            'is ahead by 1 hour.')
+            'description':
+                'Use calendar to select dates.'
         }),
     )
 
@@ -78,8 +81,8 @@ class BookInstanceAdmin(admin.ModelAdmin):
         }),
         ('Availability', {
             'fields': ('due_date',),
-            'description': ('Status options: available, on_loan, reserved, '
-                            'maintenance. Use calendar for due_date.')
+            'description':
+                'Status options: available, on_loan, reserved, maintenance.'
         }),
     )
 

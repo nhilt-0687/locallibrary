@@ -17,7 +17,7 @@
 
         <h3>{% trans "Copies" %}</h3>
         <ul class="book-list">
-            {% for copy in book_instances %}
+            {% for copy in book.book_instance_set.all %}
                 <li class="book-item">
                     <div>
                         <strong>{% trans "Status" %}:</strong>
