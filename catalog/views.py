@@ -20,6 +20,7 @@ def index(request):
     request.session['num_visits'] = num_visits
     request.session.modified = True
 
+
     context = {
         'num_books': num_books,
         'num_instances': num_instances,
@@ -37,6 +38,7 @@ class BookListView(LoginRequiredMixin, generic.ListView):
     login_url = '/accounts/login/'
     redirect_field_name = 'redirect_to'
 
+
     def get_context_data(self, **kwargs):
         context = super(BookListView, self).get_context_data(**kwargs)
         context['some_data'] = 'This is just some data'
@@ -50,6 +52,7 @@ class BookDetailView(generic.DetailView):
 def book_detail_view(request, primary_key):
     book = get_object_or_404(Book, pk=primary_key)
     book_instances = book.book_instance_set.select_related().all()
+
 
     context = {
         'book': book,

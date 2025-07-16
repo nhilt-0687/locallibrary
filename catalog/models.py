@@ -83,7 +83,11 @@ class Book(models.Model):
 
 
 class BookInstance(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
     book = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True)
     due_date = models.DateField(null=True, blank=True)
     imprint = models.CharField(
