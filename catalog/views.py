@@ -42,10 +42,10 @@ class BookListView(generic.ListView):
 class BookDetailView(generic.DetailView):
     model = Book
 
-
 def book_detail_view(request, primary_key):
     book = get_object_or_404(Book, pk=primary_key)
     book_instances = book.book_instance_set.select_related().all()
+
 
     context = {
         'book': book,
