@@ -87,7 +87,6 @@ class BookInstanceAdmin(admin.ModelAdmin):
         """Set default imprint and due_date if not provided."""
         if not obj.imprint:
             obj.imprint = DEFAULT_IMPRINT
-
         if not obj.id and not obj.due_date:
             obj.due_date = timezone.now() + timedelta(days=30)
         super().save_model(request, obj, form, change)
