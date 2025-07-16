@@ -17,7 +17,8 @@
     <header>
         <h1>{% trans "Local Library" %}</h1>
         <nav>
-            <a href="{% url 'catalog:index' %}">{% trans "Home" %}</a>
+            <a href="{% url 'catalog:index' %}">{% translate "Home" %}</a>
+            <a href="{% url 'catalog:books' %}">{% translate "All Books" %}</a>
             
             <!-- Dropdown chọn ngôn ngữ -->
             <div class="language-selector">

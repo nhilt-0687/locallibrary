@@ -3,12 +3,15 @@ from django.utils import timezone
 from datetime import timedelta
 from .models import Author, Book, Genre, Language, BookInstance
 from .constants import DEFAULT_IMPRINT
+
+
 class BookInstanceInline(admin.TabularInline):
     """Inline editing for BookInstances related to a Book."""
     model = BookInstance
-    extra = 0 
+    extra = 0
     fields = ('id', 'imprint', 'due_date', 'status')
-    readonly_fields = ('id',)  
+    readonly_fields = ('id',)
+
 
 class BookInline(admin.TabularInline):
     """Inline editing for Books related to an Author."""
@@ -16,8 +19,10 @@ class BookInline(admin.TabularInline):
     extra = 0
     fields = ('title', 'language', 'isbn')
 
+
 class AuthorAdmin(admin.ModelAdmin):
-    list_display = ('last_name', 'first_name', 'date_of_birth', 'date_of_death')
+    list_display = ('last_name', 'first_name', 'date_of_birth',
+                    'date_of_death')
     search_fields = ['last_name', 'first_name']
     list_filter = ('date_of_birth', 'date_of_death')
     ordering = ['last_name', 'first_name']
@@ -29,9 +34,11 @@ class AuthorAdmin(admin.ModelAdmin):
         }),
         ('Dates', {
             'fields': ('date_of_birth', 'date_of_death'),
-            'description': 'Use calendar to select dates. Note: Server time is ahead by 1 hour.'
+            'description': ('Use calendar to select dates. Note: Server time '
+                            'is ahead by 1 hour.')
         }),
     )
+
 
 class BookAdmin(admin.ModelAdmin):
     list_display = ('title', 'author', 'display_genre', 'language')
@@ -56,6 +63,7 @@ class BookAdmin(admin.ModelAdmin):
     )
     filter_horizontal = ('genre',)
 
+
 class BookInstanceAdmin(admin.ModelAdmin):
     list_display = ('id', 'book', 'status', 'due_date')
     list_filter = ('status', 'due_date')
@@ -70,7 +78,8 @@ class BookInstanceAdmin(admin.ModelAdmin):
         }),
         ('Availability', {
             'fields': ('due_date',),
-            'description': 'Status options: available, on_loan, reserved, maintenance. Use calendar for due_date.'
+            'description': ('Status options: available, on_loan, reserved, '
+                            'maintenance. Use calendar for due_date.')
         }),
     )
 
@@ -81,6 +90,7 @@ class BookInstanceAdmin(admin.ModelAdmin):
         if not obj.id and not obj.due_date:
             obj.due_date = timezone.now() + timedelta(days=30)
         super().save_model(request, obj, form, change)
+
 
 admin.site.register(Author, AuthorAdmin)
 admin.site.register(Book, BookAdmin)
