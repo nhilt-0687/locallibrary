@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils import timezone
 from datetime import timedelta
 from .models import Author, Book, Genre, Language, BookInstance
-from .constants import DEFAULT_IMPRINT  
+from .constants import DEFAULT_IMPRINT
 
 
 class BookInstanceInline(admin.TabularInline):

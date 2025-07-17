@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 from .constants import (
     MAX_LENGTH_NAME,
@@ -9,6 +10,7 @@ from .constants import (
 )
 from django.urls import reverse
 import uuid
+from datetime import date
 
 
 class Genre(models.Model):
@@ -118,6 +120,19 @@ class BookInstance(models.Model):
         default=LoanStatus.MAINTENANCE.value,
         help_text=_('Book availability')
     )
+    borrower = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
+
+    class Meta:
+        permissions = (("can_mark_returned", "Set book as returned"),)
 
     def __str__(self):
         return f'{self.id} ({self.book.title})'
+
+    @property
+    def is_overdue(self):
+        return self.due_date and date.today() > self.due_date
