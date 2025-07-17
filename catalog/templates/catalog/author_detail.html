@@ -1,0 +1,20 @@
+{% extends "base_generic.html" %}
+{% load i18n %}
+{% block content %}
+    <h2 class="card">{% trans "Author" %}: {{ author.last_name }}, {{ author.first_name }}</h2>
+
+    <p class="card">{% trans "Date of birth" %}: {{ author.date_of_birth|date:"d/m/Y" }}</p>
+
+    <p class="card">{% trans "Date of death" %}: {{ author.date_of_death|date:"d/m/Y" }}</p>
+
+    <h3 class="card">{% trans "Books" %}:</h3>
+    {% if author.book_set.all %}
+        <p class="card">
+            {% for book in author.book_set.all %}
+                {{ book.title }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+    {% else %}
+        <p class="card">{% trans "No books available." %}</p>
+    {% endif %}
+{% endblock %}
