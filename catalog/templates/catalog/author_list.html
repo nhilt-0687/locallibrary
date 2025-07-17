@@ -1,0 +1,18 @@
+{% extends "base_generic.html" %}
+{% load i18n %}
+{% block content %}
+<h1>{% trans "Author List" %}</h1>
+{% if object_list %}
+<ul>
+    {% for author in object_list %}
+    <li>
+        {{ author.first_name }} {{ author.last_name }}
+        <a href="{% url 'catalog:author-update' author.id %}" class="button">{% trans "Update" %}</a>
+        <a href="{% url 'catalog:author-delete' author.id %}" class="button">{% trans "Delete" %}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>{% trans "No authors available." %}</p>
+{% endif %}
+{% endblock %}

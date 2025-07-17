@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% trans "Enter Team Name" %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <div class="content">
+        <main>
+            <h1>{% trans "Enter Team Name" %}</h1>
+            <form action="{% url 'catalog:team_name' %}" method="post">
+                {% csrf_token %}
+                <label for="team_name">{% trans "Enter name" %}:</label>
+                <input id="team_name" type="text" name="name_field" value="{% trans 'Default name for team' %}">
+                <input type="submit" value="{% trans 'OK' %}" class="button">
+            </form>
+        </main>
+    </div>
+</body>
+</html>

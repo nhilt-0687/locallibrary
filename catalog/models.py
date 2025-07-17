@@ -46,7 +46,7 @@ class Author(models.Model):
         return f'{self.last_name}, {self.first_name}'
 
     def get_absolute_url(self):
-        return reverse('author-detail', args=[str(self.id)])
+        return reverse('catalog:author-detail', args=[str(self.id)])
 
 
 class Book(models.Model):
@@ -79,7 +79,7 @@ class Book(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('book-detail', args=[str(self.id)])
+        return reverse('catalog:book_detail', args=[str(self.id)])
 
 
 class BookInstance(models.Model):

@@ -9,7 +9,7 @@ class BookInstanceInline(admin.TabularInline):
     """Inline editing for BookInstances related to a Book."""
     model = BookInstance
     extra = 0
-    fields = ('id', 'imprint', 'due_date', 'status')
+    fields = ('id', 'imprint', 'due_date', 'status', 'borrower')
     readonly_fields = ('id',)
 
 
@@ -68,9 +68,9 @@ class BookAdmin(admin.ModelAdmin):
 
 
 class BookInstanceAdmin(admin.ModelAdmin):
-    list_display = ('id', 'book', 'status', 'due_date')
-    list_filter = ('status', 'due_date')
-    search_fields = ('id', 'book__title')
+    list_display = ('id', 'book', 'status', 'borrower', 'due_date')
+    list_filter = ('status', 'due_date', 'borrower')
+    search_fields = ('id', 'book__title', 'borrower__username')
     date_hierarchy = 'due_date'
     list_editable = ('status',)
     readonly_fields = ('id',)
@@ -79,10 +79,14 @@ class BookInstanceAdmin(admin.ModelAdmin):
         ('Instance Information', {
             'fields': ('id', 'book', 'status')
         }),
-        ('Availability', {
-            'fields': ('due_date',),
+        ('Loan Information', {
+            'fields': ('borrower', 'due_date'),
             'description':
-                'Status options: available, on_loan, reserved, maintenance.'
+                'Set borrower and due date for loaned books.'
+        }),
+        ('Additional Info', {
+            'fields': ('imprint',),
+            'classes': ('collapse',)
         }),
     )
 
