@@ -9,7 +9,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 import datetime
-
+import bleach
 
 def index(request):
     """View function for home page of site."""
@@ -35,22 +35,20 @@ def index(request):
 
     return render(request, 'index.html', context=context)
 
-
 class BookListView(LoginRequiredMixin, generic.ListView):
     model = Book
     paginate_by = DEFAULT_PAGINATION_SIZE
     login_url = '/accounts/login/'
     redirect_field_name = 'redirect_to'
+    ordering = ['title']
 
     def get_context_data(self, **kwargs):
         context = super(BookListView, self).get_context_data(**kwargs)
         context['some_data'] = 'This is just some data'
         return context
 
-
 class AuthorDetailView(generic.DetailView):
     model = Author
-
 
 def book_detail_view(request, primary_key):
     book = get_object_or_404(Book, pk=primary_key)
@@ -65,7 +63,6 @@ def book_detail_view(request, primary_key):
         context=context
     )
 
-
 @login_required
 def my_borrowed_books(request):
     borrowed_books = BookInstance.objects.filter(
@@ -78,7 +75,6 @@ def my_borrowed_books(request):
     }
     return render(request, 'catalog/my_borrowed_books.html', context=context)
 
-
 @login_required
 @permission_required('catalog.can_mark_returned', raise_exception=True)
 def mark_book_returned(request, bookinstance_id):
@@ -90,17 +86,15 @@ def mark_book_returned(request, bookinstance_id):
         bookinstance.save()
     return redirect('catalog:my_borrowed_books')
 
-
 def team_name_view(request):
     if request.method == 'POST':
-        team_name = request.POST.get('name_field')
+        team_name = bleach.clean(request.POST.get('name_field'))
         return render(
             request,
             'catalog/team_name_success.html',
             {'team_name': team_name}
         )
     return render(request, 'forms.html')
-
 
 @login_required
 @permission_required('catalog.can_mark_returned', raise_exception=True)
@@ -123,7 +117,6 @@ def renew_book_librarian(request, pk):
     }
     return render(request, 'catalog/book_renew_librarian.html', context)
 
-
 @login_required
 @permission_required('catalog.can_mark_returned', raise_exception=True)
 def all_borrowed_books(request):
@@ -136,24 +129,30 @@ def all_borrowed_books(request):
     }
     return render(request, 'catalog/all_borrowed_books.html', context)
 
-
 class AuthorCreate(CreateView):
     model = Author
     fields = ['first_name', 'last_name', 'date_of_birth', 'date_of_death']
     template_name = 'catalog/author_form.html'
 
+    def form_valid(self, form):
+        form.instance.first_name = bleach.clean(form.instance.first_name)
+        form.instance.last_name = bleach.clean(form.instance.last_name)
+        return super().form_valid(form)
 
 class AuthorUpdate(UpdateView):
     model = Author
     fields = ['first_name', 'last_name', 'date_of_birth', 'date_of_death']
     template_name = 'catalog/author_form.html'
 
+    def form_valid(self, form):
+        form.instance.first_name = bleach.clean(form.instance.first_name)
+        form.instance.last_name = bleach.clean(form.instance.last_name)
+        return super().form_valid(form)
 
 class AuthorDelete(DeleteView):
     model = Author
     template_name = 'catalog/author_confirm_delete.html'
     success_url = reverse_lazy('catalog:authors')
-
 
 class AuthorListView(generic.ListView):
     model = Author

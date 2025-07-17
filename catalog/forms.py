@@ -19,10 +19,13 @@ class RenewBookModelForm(forms.ModelForm):
 
     def clean_due_date(self):
         data = self.cleaned_data['due_date']
+        if data is None:
+            raise ValidationError(_('Invalid date - please enter a renewal date.'))
         if data < datetime.date.today():
             raise ValidationError(_('Invalid date - renewal in the past'))
         if data > datetime.date.today() + datetime.timedelta(weeks=4):
             raise ValidationError(
-                _('Invalid date - renewal more than 4 weeks ahead')
+                _('Invalid date - renewal more than 4 weeks '
+                  'ahead')
             )
         return data
