@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="{% get_current_language %}">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% trans "Enter Team Name" %}</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <div class="content">
-        <main>
-            <h1>{% trans "Enter Team Name" %}</h1>
-            <form action="{% url 'catalog:team_name' %}" method="post">
-                {% csrf_token %}
-                <label for="team_name">{% trans "Enter name" %}:</label>
-                <input id="team_name" type="text" name="name_field" value="{% trans 'Default name for team' %}">
-                <input type="submit" value="{% trans 'OK' %}" class="button">
-            </form>
-        </main>
+    <div class="container">
+        <h1>{% trans "Enter Team Name" %}</h1>
+        <form method="post" action="{% url 'team_name_submit' %}">
+            {% csrf_token %}
+            <label for="team_name">{% trans "Enter name" %}:</label>
+            <input type="text" id="team_name" name="team_name" required>
+            <button type="submit">{% trans "Submit" %}</button>
+        </form>
     </div>
 </body>
 </html>

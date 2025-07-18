@@ -1,5 +1,6 @@
 {% load static %}
 {% load i18n %}
+
 <!DOCTYPE html>
 {% get_current_language as LANGUAGE_CODE %}
 <html lang="{{ LANGUAGE_CODE }}">
@@ -18,7 +19,7 @@
                 <li><a href="{% url 'catalog:books' %}">{% trans "All books" %}</a></li>
                 <li><a href="{% url 'catalog:authors' %}">{% trans "All authors" %}</a></li>
                 {% if user.is_authenticated %}
-                    <li>{% trans "User" %}: {{ user.get_username }}</li>
+                    <li>{% trans "User" %}: {{ user.get_username|escape }}</li>
                     <li><a href="{% url 'catalog:my_borrowed_books' %}">{% trans "My Borrowed" %}</a></li>
                     {% if perms.catalog.can_mark_returned %}
                         <li><a href="{% url 'catalog:all-borrowed' %}">{% trans "All Borrowed Books" %}</a></li>
