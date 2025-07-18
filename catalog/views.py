@@ -41,6 +41,7 @@ class BookListView(LoginRequiredMixin, generic.ListView):
     paginate_by = DEFAULT_PAGINATION_SIZE
     login_url = '/accounts/login/'
     redirect_field_name = 'redirect_to'
+    ordering = ['title']
 
     def get_context_data(self, **kwargs):
         context = super(BookListView, self).get_context_data(**kwargs)
